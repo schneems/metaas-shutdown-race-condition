@@ -43,19 +43,33 @@ git push heroku main
 Wait ~60 seconds, then check the logs:
 
 ```bash
-heroku logs -n 100 -a <app-name> | grep "barnes\|SIGTERM\|SIGKILL\|R12"
+heroku logs --tail
 ```
 
 You should see:
 
 ```
-Stopping all processes with SIGTERM
-SIGTERM received at <timestamp>, delaying shutdown...
-barnes: metrics POST rejected (401): dynoidmap: no dyno information exists for that UUID
-barnes: metrics POST rejected (401): dynoidmap: no dyno information exists for that UUID
-barnes: metrics POST rejected (401): dynoidmap: no dyno information exists for that UUID
-Error R12 (Exit timeout) -> At least one process failed to exit within 30 seconds of SIGTERM
-Stopping remaining processes with SIGKILL
+2026-06-09T16:13:36.866084+00:00 heroku[web.1]: Restarting
+2026-06-09T16:13:36.923441+00:00 heroku[web.1]: State changed from up to starting
+2026-06-09T16:13:38.140819+00:00 heroku[web.1]: Starting process with command `bundle exec puma -C- -p 57700`
+2026-06-09T16:13:38.269578+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2026-06-09T16:13:38.350656+00:00 app[web.1]: SIGTERM received at 2026-06-09 16:13:38 UTC, delaying shutdown...
+2026-06-09T16:13:39.208953+00:00 app[web.1]: Puma starting in single mode...
+2026-06-09T16:13:39.208976+00:00 app[web.1]: * Puma version: 8.0.2 ("Into the Arena")
+2026-06-09T16:13:39.208977+00:00 app[web.1]: * Ruby version: ruby 3.3.9 (2025-07-24 revision f5c772fc7c) [x86_64-linux]
+2026-06-09T16:13:39.208977+00:00 app[web.1]: *  Min threads: 0
+2026-06-09T16:13:39.208978+00:00 app[web.1]: *  Max threads: 5
+2026-06-09T16:13:39.208978+00:00 app[web.1]: *  Environment: production
+2026-06-09T16:13:39.208979+00:00 app[web.1]: *          PID: 2
+2026-06-09T16:13:39.245572+00:00 app[web.1]: * Listening on http://[::]:57700
+2026-06-09T16:13:39.246829+00:00 app[web.1]: Use Ctrl-C to stop
+2026-06-09T16:13:39.290403+00:00 heroku[web.1]: State changed from starting to up
+2026-06-09T16:13:43.951281+00:00 app[web.1]: barnes: metrics POST rejected (401): dynoidmap: no dyno information exists for that UUID
+2026-06-09T16:13:53.955331+00:00 app[web.1]: barnes: metrics POST rejected (401): dynoidmap: no dyno information exists for that UUID
+2026-06-09T16:14:03.958345+00:00 app[web.1]: barnes: metrics POST rejected (401): dynoidmap: no dyno information exists for that UUID
+2026-06-09T16:14:08.456434+00:00 heroku[web.1]: Error R12 (Exit timeout) -> At least one process failed to exit within 30 seconds of SIGTERM
+2026-06-09T16:14:08.459506+00:00 heroku[web.1]: Stopping remaining processes with SIGKILL
+2026-06-09T16:14:08.513680+00:00 heroku[web.1]: Process exited with status 137
 ```
 
 ## Notes
